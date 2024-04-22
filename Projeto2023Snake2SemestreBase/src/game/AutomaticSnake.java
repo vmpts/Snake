@@ -19,7 +19,7 @@ public class AutomaticSnake extends Snake {
 
 	@Override
 	public void run() {
-		//alaoaaoaoaoao
+		//alaoaaoaoaoaoasdas
 		//TODO
 	}
 	
