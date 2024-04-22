@@ -21,17 +21,24 @@ public class LocalBoard extends Board{
 	private static final int NUM_OBSTACLES = 25;
 	private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
 
-	public LocalBoard() {		
-		// TODO
-		// place game elements and snakes
-
-	}
+	public LocalBoard() {	
+		addObstacles(NUM_OBSTACLES);
+		addGoal();
+		int x = 0;
+		do {
+			AutomaticSnake as = new AutomaticSnake(x,this);
+			snakes.add(as);
+		} while (x<NUM_SNAKES);
+		}
+	
 
 	// synchronization in cell
 	
 	public void init() {
-		// TODO
-		// Start Threads
+		for(Snake s2: snakes) {
+			s2.start();
+			setChanged();
+		}
 	}
 
 	

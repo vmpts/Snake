@@ -1,6 +1,7 @@
 package game;
 
 import java.io.Serializable;
+import game.Goal;
 import java.util.LinkedList;
 
 import environment.LocalBoard;
@@ -42,7 +43,15 @@ public abstract class Snake extends Thread {
 		return cells;
 	}
 	protected void move(Cell cell) throws InterruptedException {
-		//TODO
+		if(cell.isOccupiedByKiller()) {
+			killSnake();
+			Thread.currentThread().interrupt();
+		}
+		if(cell.isOcupiedByGoal()) {
+			Goal g = cell.getGoal();
+			g.captureGoal(g);
+			
+		}
 	}
 	protected void doInitialPositioning() {
 		//TODO
