@@ -32,6 +32,7 @@ public abstract class Board extends Observable {
 		}
 
 	}
+	//cona
 
 	public Cell getCell(BoardPosition cellCoord) {
 		return cells[cellCoord.x][cellCoord.y];
