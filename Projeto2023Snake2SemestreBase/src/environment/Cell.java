@@ -33,7 +33,11 @@ public class Cell{
 	// request a cell to be occupied by Snake, If it is occupied by another Snake or Obstacle, wait.
 	public  void request(Snake snake)
 			throws InterruptedException {
-		// TODO
+		while (isOcupied()) {
+			wait();
+		//	System.out.println(isOcupied());
+		}
+		ocuppyingSnake = snake;
 	}
 
 	public void release() {
@@ -54,10 +58,18 @@ public class Cell{
 
 	}
 
-	public boolean isOcupied() {
-		// TODO
-		return false;
-	}
+	
+		public boolean isOcupied() {
+		    if (isOcupiedBySnake()) {
+		        return true;
+		    }
+		    
+		    if (gameElement != null && gameElement instanceof Obstacle) {
+		        return true;
+		    }
+		    
+		    return false;
+		}
 
 
 	public Snake getOcuppyingSnake() {

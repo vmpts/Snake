@@ -61,12 +61,25 @@ public abstract class Snake extends Thread {
 			 posAleatoriaY = (int) (Math.random() * board.WIDTH);
 			BoardPosition BoardPosition= new BoardPosition(posAleatoriaX,posAleatoriaY);
 			c=board.getCell(BoardPosition);
-			
-			
-			
+			 if (!c.isOcupied()&& c!=null) {
+				 break;
+				  }
+			 else {
+				 c=null;
+			 }
+		}
+		try { 
+			c.request(this);
+			cells.add(c);
+			System.out.println("A cobra foi inicializada nesta posição " + c.getPosition());		
+		}
+		catch(InterruptedException e){
+			Thread.currentThread().interrupt(); 
+	        System.err.println("Inicialização da cobra foi interrompida");
+	    }
 		}
 		
-	}
+	
 	
 	public Board getBoard() {
 		return board;
