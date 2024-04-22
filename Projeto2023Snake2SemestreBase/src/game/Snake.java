@@ -54,7 +54,18 @@ public abstract class Snake extends Thread {
 		}
 	}
 	protected void doInitialPositioning() {
-		//TODO
+		Cell c = null;
+		int posAleatoriaY;
+		int posAleatoriaX = 0;
+		for (int y=0;y<board.WIDTH;y++) {
+			 posAleatoriaY = (int) (Math.random() * board.WIDTH);
+			BoardPosition BoardPosition= new BoardPosition(posAleatoriaX,posAleatoriaY);
+			c=board.getCell(BoardPosition);
+			
+			
+			
+		}
+		
 	}
 	
 	public Board getBoard() {
