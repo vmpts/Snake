@@ -25,10 +25,11 @@ public class LocalBoard extends Board{
 		addObstacles(NUM_OBSTACLES);
 		addGoal();
 		int x = 0;
-		do {
+		for (int i = 0; i < NUM_SNAKES; i++) {
 			AutomaticSnake as = new AutomaticSnake(x,this);
+			System.out.println("cobras" + i);
 			snakes.add(as);
-		} while (x<NUM_SNAKES);
+		} 
 		}
 	
 
@@ -37,6 +38,7 @@ public class LocalBoard extends Board{
 	public void init() {
 		for(Snake s2: snakes) {
 			s2.start();
+			System.out.println(s2.getId());
 			setChanged();
 		}
 	}
