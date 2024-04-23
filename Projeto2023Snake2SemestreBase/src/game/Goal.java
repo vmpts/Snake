@@ -32,9 +32,9 @@ public class Goal extends GameElement  {
 		        int randomY = (int) (Math.random() * Board.HEIGHT);
 		        BoardPosition bp = new BoardPosition(randomX, randomY);
 
-			if (!board.getCell(bp).isOcupiedBySnake() && !board.getCell(bp).isOcupied()) {
+			if (!board.getCell(bp).isOcupied()) {
 				BoardPosition posição = board.getGoalPosition();
-				board.getCell(posição).removeGoal();
+			//	board.getCell(posição).removeGoal();
 			
 				board.getCell(bp).setGameElement(gameElement);
 				board.setGoalPosition(bp);

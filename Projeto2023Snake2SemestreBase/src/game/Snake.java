@@ -44,29 +44,31 @@ public abstract class Snake extends Thread {
 	}
 	
 		protected void move(Cell cell) throws InterruptedException {
-        if (wasKilled() || getBoard().isFinished()) {
+        if (getBoard().isFinished()|| wasKilled()) {
             return;
         }
+        if(!cell.isOcupied()) {
         if (getCells().size() >= getSize()) {
-            getCells().removeFirst().release(); // Liberta a primeira célula (cauda antiga).
-        }
+	        getCells().removeFirst().release(); // Liberta a primeira c�lula (cauda antiga)
+	    }
+       
         if (cell.isOcupiedByGoal()) {
-            Goal goal = cell.getGoal();
-            //((Goal) (getBoard().getCell(getBoard().getGoalPosition()).getGameElement())).captureGoal();
-            setSize(getSize() + goal.getGoalValue()); // Aumenta o tamanho da cobra com base no valor do objetivo.
-        }
-        if (cell.isOccupiedByKiller()) {
-            killSnake();
-            Thread.currentThread().interrupt();
-        }
-        getCells().addLast(cell); // Adiciona a nova célula ao final (nova cabeça).
-        cell.request(this); // Solicita a ocupação da célula.
-        getBoard().setChanged();
+            Goal g = cell.getGoal();
+            g.captureGoal(g);
+            this.size= this.size+g.getGoalValue()
+;        }
+//        if (cell.isOccupiedByKiller()) {
+//            killSnake();
+//            Thread.currentThread().interrupt();
+//        }
+        cell.request(this); 
+        getCells().addLast(cell); 
+        board.setChanged();
+	}
 		}
 
 		
-	
-	
+		
 	public void setSize(int size) {
 		this.size = size;
 	}

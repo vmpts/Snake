@@ -31,7 +31,7 @@ public class Cell{
 	}
 
 	// request a cell to be occupied by Snake, If it is occupied by another Snake or Obstacle, wait.
-	public  void request(Snake snake)
+	public synchronized void request(Snake snake)
 			throws InterruptedException {
 		while (isOcupied()) {
 			wait();
@@ -39,9 +39,16 @@ public class Cell{
 		ocuppyingSnake = snake;
 	}
 
-	public void release() {
-		// TODO
-	}
+	public void release() 
+		throws InterruptedException {
+			while(!isOcupied()) {
+				wait();
+			}
+			ocuppyingSnake=null;
+			//this.notifyAll();
+		}
+		
+	
 
 	public boolean isOcupiedBySnake() {
 		return ocuppyingSnake!=null;
@@ -77,11 +84,21 @@ public class Cell{
 
 
 	public Goal removeGoal() {
-		// TODO
-		return null;
-	}
+		if(isOcupiedByGoal()) {
+		        Goal goal = (Goal) this.gameElement;
+		        this.gameElement = null;
+		        return goal;
+		    }else {
+		    return null;
+		}
+			
+		}
+		
 	public void removeObstacle() {
-		// TODO
+		if(isOcupiedByGoal()) {
+			Obstacle ob = (Obstacle)this.gameElement;
+			ob = null;
+		}
 	}
 
 
