@@ -42,40 +42,36 @@ public abstract class Snake extends Thread {
 	public LinkedList<Cell> getCells() {
 		return cells;
 	}
-	protected void move(Cell cell) throws InterruptedException {
-		
-		if(cell.isOccupiedByKiller()) {
-			killSnake();
-			Thread.currentThread().interrupt();
-		}
-		
-		if(cell.isOcupiedByGoal()) {
-			if(cell.getGoal().getGoalValue() == 9) {
-				return;
-			}else {
-			
-			cell.getGoal().captureGoal(cell.getGoal());
-			cell.request(this);
-			this.size= this.size+ cell.getGoal().getGoalValue();
-			cells.add(cell);
-			
-			}
-		}
-		
-		if(!cell.isOcupied()) {
-			if (getCells().size() >= getSize()) {
-		        getCells().removeFirst().release(); 
-		        
-		    }
-			
-		}
-		board.setChanged();
-		
-	}	
 	
-		
+		protected void move(Cell cell) throws InterruptedException {
+        if (wasKilled() || getBoard().isFinished()) {
+            return;
+        }
+        if (getCells().size() >= getSize()) {
+            getCells().removeFirst().release(); // Liberta a primeira célula (cauda antiga).
+        }
+        if (cell.isOcupiedByGoal()) {
+            Goal goal = cell.getGoal();
+            //((Goal) (getBoard().getCell(getBoard().getGoalPosition()).getGameElement())).captureGoal();
+            setSize(getSize() + goal.getGoalValue()); // Aumenta o tamanho da cobra com base no valor do objetivo.
+        }
+        if (cell.isOccupiedByKiller()) {
+            killSnake();
+            Thread.currentThread().interrupt();
+        }
+        getCells().addLast(cell); // Adiciona a nova célula ao final (nova cabeça).
+        cell.request(this); // Solicita a ocupação da célula.
+        getBoard().setChanged();
+		}
+
 		
 	
+	
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+
 	protected void doInitialPositioning() {
 		Cell c = null;
 		int posAleatoriaY;
@@ -83,7 +79,7 @@ public abstract class Snake extends Thread {
 		for (int y=0;y<board.WIDTH;y++) {
 			 posAleatoriaY = (int) (Math.random() * board.WIDTH);
 			BoardPosition BoardPosition= new BoardPosition(posAleatoriaX,posAleatoriaY);
-			System.out.println("erro posição"+ BoardPosition);
+			//System.out.println("erro posição"+ BoardPosition);
 			c=board.getCell(BoardPosition);
 			 if (!c.isOcupied()&& c!=null) {
 				 break;

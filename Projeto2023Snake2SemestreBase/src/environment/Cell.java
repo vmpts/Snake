@@ -35,7 +35,6 @@ public class Cell{
 			throws InterruptedException {
 		while (isOcupied()) {
 			wait();
-		//	System.out.println(isOcupied());
 		}
 		ocuppyingSnake = snake;
 	}

@@ -26,6 +26,7 @@ public class LocalBoard extends Board{
 	public LocalBoard() {	
 		 addObstacles(NUM_OBSTACLES);
 		 addGoal();
+		
 		for (int i = 0; i < NUM_SNAKES; i++) {
 			AutomaticSnake as = new AutomaticSnake(i,this);
 			System.out.println("cobras" + i);
