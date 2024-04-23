@@ -91,10 +91,9 @@ public class Cell{
 		}
 		
 	public void removeObstacle() {
-		if(isOcupiedByGoal()) {
-			Obstacle ob = (Obstacle)this.gameElement;
-			ob = null;
-		}
+		if (isOcupiedByObstacle()) {
+	          gameElement = null;
+	      }
 	}
 
 

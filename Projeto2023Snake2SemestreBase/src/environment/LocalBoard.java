@@ -11,7 +11,9 @@ import java.util.concurrent.Executors;
 
 import game.GameElement;
 import game.Goal;
+import game.Killer;
 import game.Obstacle;
+import game.ObstacleMover;
 import game.Snake;
 import server.Server;
 import game.AutomaticSnake;
@@ -33,6 +35,12 @@ public class LocalBoard extends Board{
 			snakes.add(as);
 		} 
 		}
+	private void addKiller() {
+        BoardPosition pos = getRandomPosition();
+        if (!getCell(pos).isOcupied()) {
+            getCell(pos).setGameElement(new Killer());
+        }
+    }
 	
 
 	// synchronization in cell
@@ -41,8 +49,25 @@ public class LocalBoard extends Board{
 		for(Snake s: snakes) {
 			s.start();
 			System.out.println(s.getId());
+			
+			
 		}
+		ExecutorService threadPool = Executors.newFixedThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
+		    barrier = new CyclicBarrier(NUM_SIMULTANEOUS_MOVING_OBSTACLES, new Runnable() {
+		        @Override
+		        public void run() {
+		             addKiller();
+		        }
+		    });
+		
+		for (Obstacle o : getObstacles()) {
+			ObstacleMover oM = new ObstacleMover(this, o, barrier);
+			threadPool.submit(oM);
+		}
+
+		setChanged();
 	}
+	
 					
 	public void removeSnake(BoardPosition position) {
 //		TODO

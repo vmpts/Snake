@@ -23,8 +23,31 @@ public class Obstacle extends GameElement {
 	public void decrementRemainingMoves() {
 		remainingMoves--;
 	}
+	public BoardPosition getPos(BoardPosition pos) {
+		return pos;
+	}
 	public void setPos(BoardPosition pos) {
 		this.pos = pos;
+	}
+
+	public static int getNumMoves() {
+		return NUM_MOVES;
+	}
+
+	public Board getBoard() {
+		return board;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
+	public BoardPosition getPos() {
+		return pos;
+	}
+
+	public void setRemainingMoves(int remainingMoves) {
+		this.remainingMoves = remainingMoves;
 	}
 
 }
