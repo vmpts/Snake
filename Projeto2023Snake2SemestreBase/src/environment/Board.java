@@ -22,6 +22,7 @@ public abstract class Board extends Observable {
 	public static final int HEIGHT = 30;
 	protected LinkedList<Snake> snakes = new LinkedList<Snake>();
 	protected boolean isFinished;
+	public LinkedList<BoardPosition> obstaculos = new LinkedList<BoardPosition>();
 
 	public Board() {
 		cells = new Cell[WIDTH][HEIGHT];
@@ -32,7 +33,7 @@ public abstract class Board extends Observable {
 		}
 
 	}
-	//cona
+	
 
 	public Cell getCell(BoardPosition cellCoord) {
 		return cells[cellCoord.x][cellCoord.y];
@@ -51,7 +52,22 @@ public abstract class Board extends Observable {
 	}
 
 	public void addGameElement(GameElement gameElement) {
-		//TODO
+		
+		boolean placed=false;
+		while(!placed) {
+			BoardPosition pos=getRandomPosition();
+			if(!getCell(pos).isOcupied() && !getCell(pos).isOcupiedByGoal()) {
+				getCell(pos).setGameElement(gameElement);
+				if(gameElement instanceof Goal) {
+					setGoalPosition(pos);
+                
+				}
+				if (gameElement instanceof Obstacle) {
+					obstaculos.add(pos);
+				}
+				placed=true;
+			}
+		}
 	}
 
 	public List<BoardPosition> getNeighboringPositions(Cell cell) {
@@ -70,8 +86,18 @@ public abstract class Board extends Observable {
 	}
 
 	public BoardPosition selectPositionClosestToGoal(List<BoardPosition> possibleDestinations) {
-		//TODO
-		return null;
+		double minima = 200;
+		BoardPosition boardPosition = null;
+		for (BoardPosition pD: possibleDestinations) {
+			double dToGoal = pD.distanceTo(getGoalPosition());
+			if (dToGoal < minima) {
+				minima = dToGoal;
+				boardPosition = pD;
+			}
+			}
+		
+		
+		return boardPosition;
 	}
 
 	protected Goal addGoal() {
@@ -81,7 +107,6 @@ public abstract class Board extends Observable {
 	}
 
 	protected void addObstacles(int numberObstacles) {
-		//TODO
 	}
 
 	public LinkedList<Snake> getSnakes() {

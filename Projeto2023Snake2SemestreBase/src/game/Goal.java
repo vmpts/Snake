@@ -40,6 +40,7 @@ public class Goal extends GameElement  {
 				isGoalPlaced = true;
 			}
 		}
+			incrementValue();
 		board.setChanged();
 	}
 }

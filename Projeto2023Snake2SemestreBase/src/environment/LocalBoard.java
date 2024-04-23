@@ -23,10 +23,9 @@ public class LocalBoard extends Board{
 
 	public LocalBoard() {	
 		addObstacles(NUM_OBSTACLES);
-		addGoal();
-		int x = 0;
+		Goal g = addGoal();
 		for (int i = 0; i < NUM_SNAKES; i++) {
-			AutomaticSnake as = new AutomaticSnake(x,this);
+			AutomaticSnake as = new AutomaticSnake(i,this);
 			System.out.println("cobras" + i);
 			snakes.add(as);
 		} 
@@ -36,9 +35,9 @@ public class LocalBoard extends Board{
 	// synchronization in cell
 	
 	public void init() {
-		for(Snake s2: snakes) {
-			s2.start();
-			System.out.println(s2.getId());
+		for(Snake s: snakes) {
+			s.start();
+			System.out.println(s.getId());
 			setChanged();
 		}
 	}
