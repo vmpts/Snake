@@ -31,12 +31,17 @@ public class AutomaticSnake extends Snake {
 				List<BoardPosition> possibleCells = getBoard().getNeighboringPositions(cell);
 
 				
-				Iterator<BoardPosition> iterator = possibleCells.iterator();
-				while (iterator.hasNext()) {
-					BoardPosition pos = iterator.next();
-					if (this.cells.contains(getBoard().getCell(pos))) {
-						iterator.remove();
-					}
+				for (int i = 0; i < possibleCells.size(); i++) {
+				    BoardPosition pos = possibleCells.get(i);
+				    
+				    // Verificar se a posição vizinha está na mesma linha ou coluna
+				    if (pos.x != cell.getPosition().x && pos.y != cell.getPosition().y) {
+				        possibleCells.remove(i);
+				        i--; // Decrementar o índice para compensar a remoção do elemento
+				    } else if (this.cells.contains(getBoard().getCell(pos))) {
+				        possibleCells.remove(i);
+				        i--; // Decrementar o índice para compensar a remoção do elemento
+				    }
 				}
 
 				BoardPosition nextPosition = getBoard().selectPositionClosestToGoal(possibleCells);
@@ -50,6 +55,8 @@ public class AutomaticSnake extends Snake {
 
 				Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
 			}
+		
+	
 
 			catch (InterruptedException e) {
 				return;

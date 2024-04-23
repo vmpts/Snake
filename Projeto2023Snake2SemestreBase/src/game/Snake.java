@@ -49,7 +49,7 @@ public abstract class Snake extends Thread {
         }
         if(!cell.isOcupied()) {
         if (getCells().size() >= getSize()) {
-	        getCells().removeFirst().release(); // Liberta a primeira c�lula (cauda antiga)
+	        getCells().removeFirst().release(); 
 	    }
        
         if (cell.isOcupiedByGoal()) {

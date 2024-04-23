@@ -66,7 +66,7 @@ public abstract class Board extends Observable {
 				if (gameElement instanceof Obstacle) {
 					obstaculos.add(pos);
 				}
-				placed=true;
+				break;
 			}
 		}
 	}
