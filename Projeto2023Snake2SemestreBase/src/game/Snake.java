@@ -43,7 +43,36 @@ public abstract class Snake extends Thread {
 		return cells;
 	}
 	protected void move(Cell cell) throws InterruptedException {
+		
+		if(cell.isOccupiedByKiller()) {
+			killSnake();
+			Thread.currentThread().interrupt();
+		}
+		
+		if(cell.isOcupiedByGoal()) {
+			if(cell.getGoal().getGoalValue() == 9) {
+				return;
+			}else {
+			
+			cell.getGoal().captureGoal(cell.getGoal());
+			cell.request(this);
+			this.size= this.size+ cell.getGoal().getGoalValue();
+			cells.add(cell);
+			
 			}
+		}
+		
+		if(!cell.isOcupied()) {
+			if (getCells().size() >= getSize()) {
+		        getCells().removeFirst().release(); 
+		        
+		    }
+			
+		}
+		board.setChanged();
+		
+	}	
+	
 		
 		
 	
