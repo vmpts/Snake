@@ -66,11 +66,7 @@ public class Cell{
 
 	
 		public boolean isOcupied() {
-		    if (isOcupiedBySnake()) {
-		        return true;
-		    }
-		    
-		    if (gameElement != null && gameElement instanceof Obstacle) {
+		    if (isOcupiedBySnake() || (gameElement != null && gameElement instanceof Obstacle)) {
 		        return true;
 		    }
 		    

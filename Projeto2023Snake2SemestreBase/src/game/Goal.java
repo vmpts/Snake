@@ -16,6 +16,7 @@ public class Goal extends GameElement  {
 		return value;
 	}
 	public void incrementValue() throws InterruptedException {
+		if (value < MAX_VALUE-1);
 		value++;
 	}
 

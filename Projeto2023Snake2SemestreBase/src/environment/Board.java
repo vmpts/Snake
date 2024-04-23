@@ -143,6 +143,9 @@ public abstract class Board extends Observable {
 		return isFinished;
 
 	}
+	public void setFinished(boolean isFinished) {
+		this.isFinished = isFinished;
+	}
 
 	public LinkedList<Obstacle> getObstacles() {
 		LinkedList<Obstacle> obstacles = new LinkedList<Obstacle>();

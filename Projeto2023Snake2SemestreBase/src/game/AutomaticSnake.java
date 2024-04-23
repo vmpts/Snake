@@ -25,7 +25,7 @@ public class AutomaticSnake extends Snake {
 		doInitialPositioning();
 		while(!Thread.interrupted()) {
 		try {
-			Thread.sleep(Board.PLAYER_PLAY_INTERVAL);	
+				
 				Cell cell = new Cell(getPath().getLast());
 				
 				List<BoardPosition> possibleCells = getBoard().getNeighboringPositions(cell);
