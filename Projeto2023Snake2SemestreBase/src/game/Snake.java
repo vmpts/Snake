@@ -43,16 +43,10 @@ public abstract class Snake extends Thread {
 		return cells;
 	}
 	protected void move(Cell cell) throws InterruptedException {
-		if(cell.isOccupiedByKiller()) {
-			killSnake();
-			Thread.currentThread().interrupt();
-		}
-		if(cell.isOcupiedByGoal()) {
-			Goal g = cell.getGoal();
-			g.captureGoal(g);
-			
-		}
-	}
+			}
+		
+		
+	
 	protected void doInitialPositioning() {
 		Cell c = null;
 		int posAleatoriaY;

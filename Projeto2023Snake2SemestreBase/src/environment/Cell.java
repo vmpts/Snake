@@ -17,7 +17,7 @@ public class Cell{
 		return gameElement;
 		
 	}
-	//Adicionar comentario adasfawdf  asd f
+	
 	
 
 
@@ -54,7 +54,7 @@ public class Cell{
 	}
 
 	public void setGameElement(GameElement obstacle) {
-		// TODO
+		gameElement = obstacle;
 
 	}
 

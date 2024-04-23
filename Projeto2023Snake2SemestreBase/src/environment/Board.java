@@ -1,6 +1,7 @@
 package environment;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,13 +52,13 @@ public abstract class Board extends Observable {
 		this.goalPosition = goalPosition;
 	}
 
-	public void addGameElement(GameElement gameElement) {
-		
+	public void addGameElement(GameElement gameElement) {		
 		boolean placed=false;
 		while(!placed) {
 			BoardPosition pos=getRandomPosition();
-			if(!getCell(pos).isOcupied() && !getCell(pos).isOcupiedByGoal()) {
+			if(!getCell(pos).isOcupied()) {
 				getCell(pos).setGameElement(gameElement);
+				
 				if(gameElement instanceof Goal) {
 					setGoalPosition(pos);
                 
@@ -102,11 +103,19 @@ public abstract class Board extends Observable {
 
 	protected Goal addGoal() {
 		Goal goal=new Goal(this);
-		addGameElement( goal);
+		addGameElement(goal);
 		return goal;
 	}
 
 	protected void addObstacles(int numberObstacles) {
+		while (numberObstacles>0) {
+			Obstacle o = new Obstacle(this);
+			getObstacles().add(o);
+			addGameElement(o);
+			numberObstacles--;
+			
+		}
+		
 	}
 
 	public LinkedList<Snake> getSnakes() {
@@ -136,9 +145,16 @@ public abstract class Board extends Observable {
 	}
 
 	public LinkedList<Obstacle> getObstacles() {
-		//TODO
-		// percorrer cells e acumular obstáculos numa lista
-		return null;
+		LinkedList<Obstacle> obstacles = new LinkedList<Obstacle>();
+		for (int i = 0; i<WIDTH;i++) {
+			for(int j = 0; j<HEIGHT; j++) {
+				if((getCell(new BoardPosition(i, j)).getGameElement())instanceof Obstacle) {
+					obstacles.add((Obstacle)(getCell(new BoardPosition(i, j)).getGameElement()));
+					
+				}
+			}
+		}
+		return obstacles;
 	}
 
 

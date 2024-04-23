@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,10 +21,11 @@ public class LocalBoard extends Board{
 	private static final int NUM_SNAKES = 6;
 	private static final int NUM_OBSTACLES = 25;
 	private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
+	private CyclicBarrier barrier;
 
 	public LocalBoard() {	
-		addObstacles(NUM_OBSTACLES);
-		Goal g = addGoal();
+		 addObstacles(NUM_OBSTACLES);
+		 addGoal();
 		for (int i = 0; i < NUM_SNAKES; i++) {
 			AutomaticSnake as = new AutomaticSnake(i,this);
 			System.out.println("cobras" + i);
@@ -38,12 +40,9 @@ public class LocalBoard extends Board{
 		for(Snake s: snakes) {
 			s.start();
 			System.out.println(s.getId());
-			setChanged();
 		}
 	}
-
-	
-	
+					
 	public void removeSnake(BoardPosition position) {
 //		TODO
 	}
@@ -57,10 +56,13 @@ public class LocalBoard extends Board{
 	}
 
 	@Override
-	public void handleKeyRelease() {
+	public void handleKeyRelease(){
 		// do nothing... No keys relevant in local game
 	}
 
 
 
+
+	
 }
+

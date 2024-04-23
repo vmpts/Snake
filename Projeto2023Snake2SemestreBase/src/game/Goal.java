@@ -1,6 +1,7 @@
 package game;
 
 import environment.Board;
+
 import environment.BoardPosition;
 import environment.LocalBoard;
 
