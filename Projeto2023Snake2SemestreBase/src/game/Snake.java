@@ -59,7 +59,7 @@ public abstract class Snake extends Thread {
  			
  			}
             g.captureGoal(g);
-            this.size= this.size+g.getGoalValue();
+            this.size= this.size+(g.getGoalValue()-1);
       }
 
         cell.request(this); 
