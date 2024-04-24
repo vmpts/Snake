@@ -44,7 +44,7 @@ public abstract class Snake extends Thread {
 	}
 	
 		protected void move(Cell cell) throws InterruptedException {
-        if (getBoard().isFinished()|| wasKilled()) {
+        if (getBoard().isFinished()) {
             return;
         }
         if(!cell.isOcupied()) {
@@ -53,14 +53,15 @@ public abstract class Snake extends Thread {
 	    }
        
         if (cell.isOcupiedByGoal()) {
-            Goal g = cell.getGoal();
+        	 Goal g = cell.getGoal();
+        	 if (g.getValue() == g.MAX_VALUE-1) {
+ 				board.setFinished(true);
+ 			
+ 			}
             g.captureGoal(g);
-            this.size= this.size+g.getGoalValue()
-;        }
-//        if (cell.isOccupiedByKiller()) {
-//            killSnake();
-//            Thread.currentThread().interrupt();
-//        }
+            this.size= this.size+g.getGoalValue();
+      }
+
         cell.request(this); 
         getCells().addLast(cell); 
         board.setChanged();
@@ -81,7 +82,7 @@ public abstract class Snake extends Thread {
 		for (int y=0;y<board.WIDTH;y++) {
 			 posAleatoriaY = (int) (Math.random() * board.WIDTH);
 			BoardPosition BoardPosition= new BoardPosition(posAleatoriaX,posAleatoriaY);
-			//System.out.println("erro posição"+ BoardPosition);
+		
 			c=board.getCell(BoardPosition);
 			 if (!c.isOcupied()&& c!=null) {
 				 break;

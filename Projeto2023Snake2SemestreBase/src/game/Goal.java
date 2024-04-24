@@ -23,11 +23,16 @@ public class Goal extends GameElement  {
 	public int getGoalValue() {
 		return value;
 	}
-	public  void captureGoal(GameElement gameElement)
+	public void captureGoal(GameElement gameElement)
 			throws InterruptedException {
-
 		
-		boolean isGoalPlaced = false;
+        boolean isGoalPlaced = false;
+        if(getGoalValue() == MAX_VALUE-1) {
+			board.setFinished(true);
+	        return; 
+        }
+        
+		incrementValue();
 			while (!isGoalPlaced) {
 				int randomX = (int) (Math.random() * Board.WIDTH);
 		        int randomY = (int) (Math.random() * Board.HEIGHT);
@@ -42,7 +47,7 @@ public class Goal extends GameElement  {
 				isGoalPlaced = true;
 			}
 		}
-			incrementValue();
+			
 		board.setChanged();
 	}
 }

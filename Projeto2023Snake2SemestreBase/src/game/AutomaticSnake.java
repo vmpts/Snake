@@ -28,29 +28,29 @@ public class AutomaticSnake extends Snake {
 				
 				Cell cell = new Cell(getPath().getLast());
 				
-				List<BoardPosition> possibleCells = getBoard().getNeighboringPositions(cell);
+				List<BoardPosition> neighborPositions = getBoard().getNeighboringPositions(cell);
 
 				
-				for (int i = 0; i < possibleCells.size(); i++) {
-				    BoardPosition pos = possibleCells.get(i);
+				for (int i = 0; i < neighborPositions.size(); i++) {
+				    BoardPosition boardPos = neighborPositions.get(i);
 				    
-				    // Verificar se a posição vizinha está na mesma linha ou coluna
-				    if (pos.x != cell.getPosition().x && pos.y != cell.getPosition().y) {
-				        possibleCells.remove(i);
-				        i--; // Decrementar o índice para compensar a remoção do elemento
-				    } else if (this.cells.contains(getBoard().getCell(pos))) {
-				        possibleCells.remove(i);
-				        i--; // Decrementar o índice para compensar a remoção do elemento
+				   
+				    if (boardPos.x != cell.getPosition().x && boardPos.y != cell.getPosition().y) {
+				    	neighborPositions.remove(i);
+				        i--; 
+				    } else if (this.cells.contains(getBoard().getCell(boardPos))) {
+				    	neighborPositions.remove(i);
+				        i--; // 
 				    }
 				}
 
-				BoardPosition nextPosition = getBoard().selectPositionClosestToGoal(possibleCells);
+				BoardPosition closestPosition = getBoard().selectPositionClosestToGoal(neighborPositions);
 			
 
 
-				if (nextPosition != null && !getBoard().getCell(nextPosition).isOcupiedBySnake()) {
+				if (closestPosition != null && !getBoard().getCell(closestPosition).isOcupiedBySnake()) {
 					
-					move(getBoard().getCell(nextPosition));
+					move(getBoard().getCell(closestPosition));
 				}
 
 				Thread.sleep(Board.PLAYER_PLAY_INTERVAL);

@@ -45,7 +45,7 @@ public class Cell{
 				wait();
 			}
 			ocuppyingSnake=null;
-			//this.notifyAll();
+			
 		}
 		
 	
@@ -68,11 +68,11 @@ public class Cell{
 		public boolean isOcupied() {
 		    if (isOcupiedBySnake() || (gameElement != null && gameElement instanceof Obstacle)) {
 		        return true;
-		    }
+		    } else {
 		    
 		    return false;
 		}
-
+		}
 
 	public Snake getOcuppyingSnake() {
 		return ocuppyingSnake;

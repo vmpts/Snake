@@ -27,7 +27,7 @@ public abstract class Board extends Observable {
 	protected LinkedList<Snake> snakes = new LinkedList<Snake>();
 	protected boolean isFinished;
 	public LinkedList<BoardPosition> obstaculos = new LinkedList<BoardPosition>();
-	private CyclicBarrier barrier;
+	
 	
 
 	public Board() {
@@ -136,7 +136,7 @@ public abstract class Board extends Observable {
 		notifyObservers();
 	}
 	
-	public BoardPosition getOPosition(Obstacle obs) {
+	public BoardPosition getObsPosition(Obstacle obs) {
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
 				Cell cell = cells[x][y];
@@ -150,50 +150,45 @@ public abstract class Board extends Observable {
 		return null;
 	}
 
+
+
 	public void moveObstacle(Obstacle obstacle) {
-		BoardPosition current=getOPosition(obstacle);
-		BoardPosition next = getRandomPosition();
-		while (obstacle.getRemainingMoves()>0) {
-			try {
-				Thread.sleep(Obstacle.OBSTACLE_MOVE_INTERVAL);
-				if(getCell(next).isOcupied()) {
-					getCell(next).setGameElement(obstacle);
-					obstacle.decrementRemainingMoves();
-					getCell(current).removeObstacle();
-					
-				}
-				else {
-					while (getCell(next).isOcupied()) {
-						next = getRandomPosition();
-					}
-					getCell(current).removeObstacle();
-					getCell(next).setGameElement(obstacle);
-					obstacle.setPos(next);
-					obstacle.decrementRemainingMoves();
+	    
+	    for (int i = obstacle.getRemainingMoves(); i > 0; i--) {
+	      
+	        BoardPosition current = getObsPosition(obstacle);
+	     
+	        BoardPosition next = getRandomPosition();
+	        
+	        try {
+	           
+	            Thread.sleep(Obstacle.OBSTACLE_MOVE_INTERVAL);
 
-				}
-				setChanged();
-			}
+	            
+	            getCell(current).removeObstacle();
 
-			catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	           
+	            while (getCell(next).isOcupied()) {
+	                next = getRandomPosition();
+	            }
 
-			}
+	            
+	            obstacle.setPos(next);
+	           
+	            getCell(next).setGameElement(obstacle);
 
-		}
+	            
+	            obstacle.decrementRemainingMoves();
 
-		if (obstacle.getRemainingMoves() == 0) {
-			try {
-				barrier.await();
-			} catch (InterruptedException | BrokenBarrierException e) {
-				e.printStackTrace();
-			}
-		}
-
+	          
+	            setChanged();
+	        } catch (InterruptedException e) {
+	            // Imprime qualquer exceção lançada durante a espera
+	            e.printStackTrace();
+	        }
+	    }
 	}
 
-	
 	public void removeGoal() {
 		//TODO
 		

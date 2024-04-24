@@ -23,7 +23,7 @@ public class LocalBoard extends Board{
 	private static final int NUM_SNAKES = 6;
 	private static final int NUM_OBSTACLES = 25;
 	private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
-	private CyclicBarrier barrier;
+	
 
 	public LocalBoard() {	
 		 addObstacles(NUM_OBSTACLES);
@@ -35,12 +35,7 @@ public class LocalBoard extends Board{
 			snakes.add(as);
 		} 
 		}
-	private void addKiller() {
-        BoardPosition pos = getRandomPosition();
-        if (!getCell(pos).isOcupied()) {
-            getCell(pos).setGameElement(new Killer());
-        }
-    }
+	
 	
 
 	// synchronization in cell
@@ -53,25 +48,22 @@ public class LocalBoard extends Board{
 			
 		}
 		ExecutorService threadPool = Executors.newFixedThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
-		    barrier = new CyclicBarrier(NUM_SIMULTANEOUS_MOVING_OBSTACLES, new Runnable() {
-		        @Override
-		        public void run() {
-		             addKiller();
-		        }
-		    });
 		
 		for (Obstacle o : getObstacles()) {
-			ObstacleMover oM = new ObstacleMover(this, o, barrier);
+			ObstacleMover oM = new ObstacleMover(o,this);
 			threadPool.submit(oM);
+			
 		}
 
 		setChanged();
 	}
 	
+	
 					
 	public void removeSnake(BoardPosition position) {
 //		TODO
 	}
+	
 
 
 
