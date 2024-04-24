@@ -57,6 +57,7 @@ public abstract class Snake extends Thread {
         	 if (g.getValue() == g.MAX_VALUE-1) {
  				board.setFinished(true);
  			
+ 			
  			}
             g.captureGoal(g);
             this.size= this.size+(g.getGoalValue()-1);
@@ -79,8 +80,8 @@ public abstract class Snake extends Thread {
 		Cell c = null;
 		int posAleatoriaY;
 		int posAleatoriaX = 0;
-		for (int y=0;y<board.WIDTH;y++) {
-			 posAleatoriaY = (int) (Math.random() * board.WIDTH);
+		for (int y=0;y<board.HEIGHT;y++) {
+			 posAleatoriaY = (int) (Math.random() * board.HEIGHT);
 			BoardPosition BoardPosition= new BoardPosition(posAleatoriaX,posAleatoriaY);
 		
 			c=board.getCell(BoardPosition);

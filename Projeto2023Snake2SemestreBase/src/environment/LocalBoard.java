@@ -37,8 +37,6 @@ public class LocalBoard extends Board{
 		}
 	
 	
-
-	// synchronization in cell
 	
 	public void init() {
 		for(Snake s: snakes) {
@@ -50,8 +48,8 @@ public class LocalBoard extends Board{
 		ExecutorService threadPool = Executors.newFixedThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
 		
 		for (Obstacle o : getObstacles()) {
-			ObstacleMover oM = new ObstacleMover(o,this);
-			threadPool.submit(oM);
+			ObstacleMover obstacleMover = new ObstacleMover(o,this);
+			threadPool.submit(obstacleMover);
 			
 		}
 

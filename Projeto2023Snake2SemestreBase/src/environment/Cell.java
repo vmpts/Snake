@@ -30,7 +30,7 @@ public class Cell{
 		return position;
 	}
 
-	// request a cell to be occupied by Snake, If it is occupied by another Snake or Obstacle, wait.
+	
 	public synchronized void request(Snake snake)
 			throws InterruptedException {
 		while (isOcupied()) {

@@ -20,7 +20,7 @@ import game.Snake;
 public abstract class Board extends Observable {
 	protected Cell[][] cells;
 	private BoardPosition goalPosition;
-	public static final long PLAYER_PLAY_INTERVAL = 100;
+	public static final long PLAYER_PLAY_INTERVAL = 150;
 	public static final long REMOTE_REFRESH_INTERVAL = 200;
 	public static final int WIDTH = 30;
 	public static final int HEIGHT = 30;
@@ -46,7 +46,7 @@ public abstract class Board extends Observable {
 	}
 
 	protected BoardPosition getRandomPosition() {
-		return new BoardPosition((int) (Math.random() *HEIGHT),(int) (Math.random() * HEIGHT));
+		return new BoardPosition((int) (Math.random() *WIDTH),(int) (Math.random() * HEIGHT));
 	}
 
 	public BoardPosition getGoalPosition() {
@@ -113,7 +113,6 @@ public abstract class Board extends Observable {
 	}
 
 	protected void addObstacles(int numberObstacles) {
-		getObstacles().clear();
 		while (numberObstacles>0) {
 			Obstacle o = new Obstacle(this);
 			getObstacles().add(o);
@@ -168,7 +167,7 @@ public abstract class Board extends Observable {
 	            getCell(current).removeObstacle();
 
 	           
-	            while (getCell(next).isOcupied()) {
+	            while (getCell(next).isOcupied() || getCell(next).isOcupiedByGoal()) {
 	                next = getRandomPosition();
 	            }
 
@@ -183,7 +182,7 @@ public abstract class Board extends Observable {
 	          
 	            setChanged();
 	        } catch (InterruptedException e) {
-	            // Imprime qualquer exceção lançada durante a espera
+	            
 	            e.printStackTrace();
 	        }
 	    }

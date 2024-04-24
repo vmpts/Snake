@@ -38,9 +38,10 @@ public class AutomaticSnake extends Snake {
 				    if (boardPos.x != cell.getPosition().x && boardPos.y != cell.getPosition().y) {
 				    	neighborPositions.remove(i);
 				        i--; 
-				    } else if (this.cells.contains(getBoard().getCell(boardPos))) {
+				    } else
+				    if (this.cells.contains(getBoard().getCell(boardPos))) {
 				    	neighborPositions.remove(i);
-				        i--; // 
+				        i--; 
 				    }
 				}
 
